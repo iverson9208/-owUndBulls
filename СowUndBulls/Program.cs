@@ -4,26 +4,51 @@ while (true)
     Console.WriteLine("Введите четырехзначное число");
     while (true)
     {
+        int number = 0;
+        int cow = 0;
+        int bull = 0;
         try
             {
-            int number = Convert.ToInt32(Console.ReadLine());
+            number = Convert.ToInt32(Console.ReadLine());
             if (number < 1000 || number > 9999)
             {
                 Console.WriteLine("Ошибка, введите четырехзначное число");
                 break;
             }
-            int num1 = number / 1000;
-            int num2 = (number % 1000) / 100;
-            int num3 = (number % 100) / 10;
-            int num4 = number %10;
-            Console.WriteLine(num1 + " " + num2 + " " + num3+" "+num4);
         }
         catch (Exception e)
         {
             Console.WriteLine("Ошибка, введите цифровое значение");
         }
         Random random = new Random();
-        int randNumber = random.Next(0,1000);
+        int randNumber = random.Next(1000,9999);
+        Console.WriteLine(randNumber);
+       
+            List<int> listRand = new List<int>();
+        List<int> listUser = new List<int>();
+            while(randNumber > 0&&number>0)
+            {
+                listRand.Add(randNumber%10);
+                listUser.Add(number%10);
+                randNumber = randNumber / 10;
+                number = number / 10;
+            }
+            listRand.Reverse();
+        listUser.Reverse();
+
+        for (int i = 0; i < listUser.Count; i++)
+        {
+            if (listRand[i] == listUser[i])
+            {
+                bull++;
+            }
+            for(int j = 0; j < i; ++j)
+            {
+
+            }
+        }
+        Console.WriteLine(bull+" Количество быков");
+       
     } 
      
     
