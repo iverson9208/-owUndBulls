@@ -1,59 +1,81 @@
 ﻿// See https://aka.ms/new-console-template for more information
-while (true)
+Console.WriteLine("Игра Быки и Коровы");
+bool endGame = true;
+Random random = new Random();
+List<int> listRand = new List<int>();     //Лист для создания случайных чисед
+for (int i = 0; i < 4;)                   //Заполнение случайными числами
 {
-    Console.WriteLine("Введите четырехзначное число");
-    while (true)
+    bool Number = false;
+    int noRandem = random.Next(0, 9);
+    for (int j = 0; j < i; ++j)
     {
-        int number = 0;
+        if (listRand[j] == noRandem)
+        {
+            Number = true;
+            break;
+        }
+    }
+    if (!Number&&noRandem!=0)
+    {
+        listRand.Add(noRandem);
+        i++;
+    }
+}
+listRand.Reverse();
+while (endGame)                                       
+{
+    int number = 0;
+
+    Console.WriteLine("Введите четырехзначное число");
+try                                                                //Блок try catch для проверки не валидного числа введеного пользователем
+    { 
+        number = Convert.ToInt32(Console.ReadLine());
+    if (number.ToString().Length!=4 )
+    {
+        Console.WriteLine("Ошибка, введите четырехзначное число");
+        break;     
+    }
+    }
+catch (Exception e)
+{
+    Console.WriteLine("Ошибка, введите цифровое значение");
+}
+
+    List<int> listUser = new List<int>();      //Лист для создания пользовательских чисел
+    while (number > 0)
+    {
+        listUser.Add(number % 10);
+        number = number / 10;
+    }
+ 
+    listUser.Reverse();
         int cow = 0;
         int bull = 0;
-        try
-            {
-            number = Convert.ToInt32(Console.ReadLine());
-            if (number < 1000 || number > 9999)
-            {
-                Console.WriteLine("Ошибка, введите четырехзначное число");
-                break;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Ошибка, введите цифровое значение");
-        }
-        Random random = new Random();
-        int randNumber = random.Next(1000,9999);
-        Console.WriteLine(randNumber);
-       
-            List<int> listRand = new List<int>();
-        List<int> listUser = new List<int>();
-            while(randNumber > 0&&number>0)
-            {
-                listRand.Add(randNumber%10);
-                listUser.Add(number%10);
-                randNumber = randNumber / 10;
-                number = number / 10;
-            }
-            listRand.Reverse();
-        listUser.Reverse();
 
-        for (int i = 0; i < listUser.Count; i++)
-        {
-            if (listRand[i] == listUser[i])
-            {
-                bull++;
-            }
-            for(int j = 0; j < i; ++j)
-            {
+    for (int i = 0; i < 4; i++)  //Проверка совпадения чисел
+    {
 
-            }
+        if (listRand[i]==listUser[i])
+        {
+            bull++;
         }
-        Console.WriteLine(bull+" Количество быков");
-       
-    } 
-     
-    
+        
+            for (int j = 0; j < 4; ++j)
+            {
+                if (listRand[i] == listUser[j])
+                {
+                    cow++;
+                }
+            }
+        
+        if (cow == 4 && bull == 4)
+        {
+            Console.WriteLine("Игра закончена");
+            endGame = false;
+            break;
+
+        }
+    }
+    Console.WriteLine("Количество быков: "+ bull+ "\n" + "Количество коров: " + cow );
 }
-public class rand
-{
-    
-}
+
