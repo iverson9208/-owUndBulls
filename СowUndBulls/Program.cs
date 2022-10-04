@@ -25,7 +25,7 @@ listRand.Reverse();
 while (endGame)                                       
 {
     int number = 0;
-
+    link1:
     Console.WriteLine("Введите четырехзначное число");
 try                                                                //Блок try catch для проверки не валидного числа введеного пользователем
     { 
@@ -47,35 +47,43 @@ catch (Exception e)
         listUser.Add(number % 10);
         number = number / 10;
     }
- 
+            for(int i=0;i<listUser.Count-1;++i)
+    {
+        for(int j = i+1; j < listUser.Count; ++j)
+        {
+            if (listUser[i] == listUser[j])
+            {
+
+                Console.WriteLine("Введите разные цифры в числе");
+                goto link1;
+            }
+        }
+    }
     listUser.Reverse();
         int cow = 0;
         int bull = 0;
-
-    for (int i = 0; i < 4; i++)  //Проверка совпадения чисел
+    for (int i = 0; i < listUser.Count; i++)  //Проверка совпадения чисел
     {
-
-        if (listRand[i]==listUser[i])
+        if (listUser.Contains(listRand[i]))
         {
-            bull++;
-        }
-        
-            for (int j = 0; j < 4; ++j)
+            if (listUser[i] == listRand[i])
             {
-                if (listRand[i] == listUser[j])
-                {
-                    cow++;
-                }
+                bull++;
             }
-        
-        if (cow == 4 && bull == 4)
+            else
+            { 
+                cow++;
+            }
+        }
+    }
+        if (bull == 4)
         {
             Console.WriteLine("Игра закончена");
             endGame = false;
             break;
 
         }
-    }
+    
     Console.WriteLine("Количество быков: "+ bull+ "\n" + "Количество коров: " + cow );
 }
 
